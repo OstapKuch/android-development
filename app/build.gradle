@@ -1,5 +1,8 @@
+
+
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -7,7 +10,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.example.safehouselab01"
+        applicationId "com.example.safehouselab02"
         minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
@@ -33,9 +36,24 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.wear:wear:1.1.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+
     // View model
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+
+    // authentication
+    implementation 'com.google.firebase:firebase-auth'
+    compileOnly 'com.google.android.wearable:wearable:2.8.1'
+
+    // timber
+    // timber
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }

@@ -1,8 +1,9 @@
-package com.example.safehouselab01;
+package com.example.safehouselab02;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpViewModel extends ViewModel {
     private final ICredentialValidator emailValidator = new EmailValidator();
@@ -10,9 +11,10 @@ public class SignUpViewModel extends ViewModel {
     private final ICredentialValidator nameValidator = new NameValidator();
     private MutableLiveData<String> error = new MutableLiveData<>();
     private MutableLiveData<Boolean> isSignedUn = new MutableLiveData<>();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
 
-    public void signUn(String name, String email, String password, String passwordRepeated) {
+    public void signUp(String name, String email, String password, String passwordRepeated) {
         boolean isValidEmail = emailValidator.isValid(email);
         boolean isValidName = nameValidator.isValid(name);
         boolean isValidPassword = passwordValidator.isValid(password);
@@ -27,7 +29,14 @@ public class SignUpViewModel extends ViewModel {
         } else if (!isEqualPasswords) {
             error.setValue(EnumErrors.REPEAT_PASSWORD.toString());
         } else {
-            isSignedUn.setValue(true);
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            isSignedUn.setValue(true);
+                        } else {
+                            isSignedUn.setValue(false);
+                        }
+                    });
         }
     }
 

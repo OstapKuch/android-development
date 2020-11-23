@@ -1,5 +1,4 @@
-package com.example.safehouselab01;
-
+package com.example.safehouselab02;
 
 public enum EnumErrors {
     NAME("Name can not be empty"),

@@ -1,4 +1,4 @@
-package com.example.safehouselab01;
+package com.example.safehouselab02;
 
 public class PasswordValidator implements ICredentialValidator {
     private static final int PASSWORD_MIN_LENGTH = 8;

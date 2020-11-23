@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1044980164327",
+    "firebase_url": "https://mobile-development-832d0.firebaseio.com",
+    "project_id": "mobile-development-832d0",
+    "storage_bucket": "mobile-development-832d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044980164327:android:d52bc86e37d90b06e96442",
+        "android_client_info": {
+          "package_name": "com.example.safehouselab02"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044980164327-lfts6v7jb5a1sq8refbacf5sjpa41h6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.safehouselab02",
+            "certificate_hash": "797d6d5763bcaf9310b97d2445732c500b93bd44"
+          }
+        },
+        {
+          "client_id": "1044980164327-n3vbtgr8j2d0dtd0svt8a3onkkl7o1g1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMrfkjEfmDGQjSE7Is5Lm0QPTCm682ScU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044980164327-n3vbtgr8j2d0dtd0svt8a3onkkl7o1g1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

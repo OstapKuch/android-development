@@ -1,4 +1,4 @@
-package com.example.safehouselab01;
+package com.example.safehouselab02;
 
 import org.junit.Test;
 

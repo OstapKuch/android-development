@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SignUpActivity">
+    tools:context=".SignInFragment">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -15,7 +15,7 @@
         android:background="@color/toolbar_colour"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="@string/sign_up_text"
+        app:title="@string/sign_in_text"
         />
 
     <LinearLayout
@@ -42,7 +42,7 @@
         android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.4"
+        android:layout_weight="0.55"
         android:orientation="vertical"
         android:gravity="center"
         android:background="@color/white">
@@ -55,22 +55,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="22sp"
-            android:text="@string/sign_up_text" />
+            android:text="@string/sign_in_text" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutPersonName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/InputField"
-            >
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/name_hint"
-                android:inputType="textPersonName"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputLayoutEmailAddress"
@@ -100,28 +86,24 @@
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputLayoutPasswordRepeat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/InputField"
 
-            >
-            <EditText
-                android:id="@+id/editTextTextPasswordRepeat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/repeat_password_hint"
-                android:inputType="textPassword"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:layout_marginTop="@dimen/ui_spacing_double"
-            android:id="@+id/buttonSignUp"
+            android:id="@+id/signInButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
+            android:text="@string/sign_in_text" />
+
+        <TextView
+            android:layout_marginTop="@dimen/ui_spacing"
+            android:id="@+id/signUpText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:textSize="18sp"
             android:text="@string/sign_up_text" />
 
     </LinearLayout>
