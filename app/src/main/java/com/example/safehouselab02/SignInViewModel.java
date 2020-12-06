@@ -26,12 +26,7 @@ public class SignInViewModel extends ViewModel {
 
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            isLoggedIn.setValue(true);
-
-                        } else {
-                            isLoggedIn.setValue(false);
-                        }
+                        isLoggedIn.setValue(task.isSuccessful());
                     });
         }
     }

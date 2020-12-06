@@ -1,10 +1,9 @@
 package com.example.safehouselab02;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -17,7 +16,7 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 
-import timber.log.Timber;
+import org.jetbrains.annotations.NotNull;
 
 
 public class SignInFragment extends Fragment {
@@ -30,23 +29,44 @@ public class SignInFragment extends Fragment {
     private TextView signUpButton;
     private TextInputLayout inputLayoutEmailAddress;
     private TextInputLayout inputLayoutPassword;
+    private OnButtonClickListener onClickedListener;
 
     public SignInFragment() {
+    }
+
+    public interface OnButtonClickListener {
+        void onSignInButtonClicked();
+
+        void onSignUpTextClicked();
+    }
+
+    @Override
+    public void onAttach(@NotNull Context context) {
+        super.onAttach(context);
+        try {
+            onClickedListener = (OnButtonClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnSignUpNavClickedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onClickedListener = null;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(new Timber.DebugTree());
-        }
         View rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
         initializeFields(rootView);
+        signInButton.setOnClickListener(onSignInClickListener);
+        signUpButton.setOnClickListener(onSignUpClickListener);
         registerViewModel();
-        onClickSignIn();
-        onClickSignUp();
         return rootView;
     }
+
 
     private void initializeFields(View rootView) {
         emailAddressEditText = rootView.findViewById(R.id.editTextTextEmailAddress);
@@ -62,9 +82,8 @@ public class SignInFragment extends Fragment {
         viewModel.getIsLoggedIn().observe(getViewLifecycleOwner(), isLoggedIn -> {
             if (isLoggedIn) {
                 showMessage("Signed In");
-                Intent myIntent = new Intent(getActivity(), StartScreen.class);
-                getActivity().startActivity(myIntent);
-                getActivity().finish();
+                onClickedListener.onSignInButtonClicked();
+
             } else {
                 showMessage("Failed");
             }
@@ -88,21 +107,15 @@ public class SignInFragment extends Fragment {
         inputLayoutPassword.setError("Password is not correct");
     }
 
-    private void onClickSignUp() {
-        signUpButton.setOnClickListener(view -> {
-            FragmentTransaction fragmentTransaction = getActivity()
-                    .getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.container, new SignUpFragment());
-            fragmentTransaction.commit();
-        });
-    }
 
-    private void onClickSignIn() {
-        signInButton.setOnClickListener(view -> {
-            String email = emailAddressEditText.getText().toString();
-            String password = passwordEditText.getText().toString();
-            viewModel.signIn(email, password);
-        });
-    }
+    private final View.OnClickListener onSignUpClickListener = view -> {
+        onClickedListener.onSignUpTextClicked();
+    };
 
+
+    private final View.OnClickListener onSignInClickListener = view -> {
+        String email = emailAddressEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        viewModel.signIn(email, password);
+    };
 }

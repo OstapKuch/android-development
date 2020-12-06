@@ -1,10 +1,10 @@
 package com.example.safehouselab02;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -16,6 +16,8 @@ import android.widget.EditText;
 
 
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
@@ -32,8 +34,31 @@ public class SignUpFragment extends Fragment {
     private TextInputLayout inputLayoutEmailAddress;
     private TextInputLayout inputLayoutPassword;
     private TextInputLayout inputLayoutPasswordRepeat;
+    private OnClickListener OnClickListener;
 
     public SignUpFragment() {
+    }
+
+    public interface OnClickListener {
+        void onSignUpButtonClicked();
+        void onBackButtonClicked();
+    }
+
+
+    @Override
+    public void onAttach(@NotNull Context context) {
+        super.onAttach(context);
+        try {
+            OnClickListener = (OnClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnSignUpClickedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        OnClickListener = null;
     }
 
     @Override
@@ -72,7 +97,7 @@ public class SignUpFragment extends Fragment {
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
         toolbar.setNavigationOnClickListener(v -> {
-            moveToSignInFragment();
+            OnClickListener.onBackButtonClicked();
         });
     }
 
@@ -90,16 +115,9 @@ public class SignUpFragment extends Fragment {
         viewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
         viewModel.getIsSignedUp().observe(getViewLifecycleOwner(), isSignedUn -> {
             Toast.makeText(getActivity(), "Registered", Toast.LENGTH_SHORT).show();
-            moveToSignInFragment();
+            OnClickListener.onSignUpButtonClicked();
         });
         viewModel.getError().observe(getViewLifecycleOwner(), this::showErrorOnFields);
-    }
-
-    private void moveToSignInFragment() {
-        FragmentTransaction fragmentTransaction = getActivity()
-                .getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, new SignInFragment());
-        fragmentTransaction.commit();
     }
 
 

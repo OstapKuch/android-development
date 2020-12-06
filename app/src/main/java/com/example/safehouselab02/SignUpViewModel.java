@@ -31,11 +31,7 @@ public class SignUpViewModel extends ViewModel {
         } else {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            isSignedUn.setValue(true);
-                        } else {
-                            isSignedUn.setValue(false);
-                        }
+                        isSignedUn.setValue(task.isSuccessful());
                     });
         }
     }
@@ -47,5 +43,6 @@ public class SignUpViewModel extends ViewModel {
     public MutableLiveData<Boolean> getIsSignedUp() {
         return isSignedUn;
     }
+
 
 }

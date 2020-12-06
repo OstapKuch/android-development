@@ -1,16 +1,15 @@
 package com.example.safehouselab02;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import timber.log.Timber;
 
 public class StartScreen extends AppCompatActivity {
-    private Dialog dialog;
 
 
     @SuppressLint("SetTextI18n")
@@ -18,13 +17,20 @@ public class StartScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
-        dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_start_screen);
-        TextView text = dialog.findViewById(R.id.dialog_info);
-        text.setText("You have successfully signed in");
-        dialog.show();
-        Timber.i("Timber log test");
+        String message = "You have successfully signed in";
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setTitle("Info");
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Timber.i("Successful log in");
 
+    }
 
+    @Override
+    public void onBackPressed() {
     }
 }
