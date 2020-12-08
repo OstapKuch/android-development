@@ -15,4 +15,6 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="dialog_text">You have signed in)</string>
+    <string name="welcome_text">Welcome Screen</string>
+    <string name="sensors">Sensors</string>
 </resources>
