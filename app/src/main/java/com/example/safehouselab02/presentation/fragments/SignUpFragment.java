@@ -3,6 +3,7 @@ package com.example.safehouselab02.presentation.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -81,6 +82,8 @@ public class SignUpFragment extends Fragment {
         initializeFields(rootView);
         registerViewModel();
         buttonOnclick();
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
         return rootView;
     }
 
@@ -100,6 +103,7 @@ public class SignUpFragment extends Fragment {
     private void onClickToolbar(View rootView) {
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             OnClickListener.onBackButtonClicked();
         });

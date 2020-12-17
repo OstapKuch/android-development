@@ -3,6 +3,7 @@ package com.example.safehouselab02.presentation.view_models;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.safehouselab02.presentation.SharedPreference;
 import com.example.safehouselab02.presentation.validators.EmailValidator;
 import com.example.safehouselab02.presentation.validators.ICredentialValidator;
 import com.example.safehouselab02.presentation.validators.PasswordValidator;
@@ -30,6 +31,7 @@ public class SignInViewModel extends ViewModel {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         isLoggedIn.setValue(task.isSuccessful());
+
                     });
         }
     }

@@ -17,4 +17,15 @@
     <string name="dialog_text">You have signed in)</string>
     <string name="welcome_text">Welcome Screen</string>
     <string name="sensors">Sensors</string>
+    <string name="logout">LogOut</string>
+    <string name="profile">Profile</string>
+    <string name="language">Language</string>
+    <string name="new_email">New Email:</string>
+    <string name="change">Change</string>
+    <string name="save">Save</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="new_password">New Password</string>
+    <string name="title_activity_sensor">SensorActivity</string>
+    <string name="sensor_info">Sensor Info</string>
 </resources>

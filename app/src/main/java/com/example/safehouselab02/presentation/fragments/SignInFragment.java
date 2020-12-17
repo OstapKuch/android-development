@@ -3,10 +3,13 @@ package com.example.safehouselab02.presentation.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.safehouselab02.R;
+import com.example.safehouselab02.presentation.SharedPreference;
 import com.example.safehouselab02.presentation.view_models.SignInViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.jetbrains.annotations.NotNull;
+
+import timber.log.Timber;
 
 
 public class SignInFragment extends Fragment {
@@ -38,7 +44,6 @@ public class SignInFragment extends Fragment {
 
     public interface OnButtonClickListener {
         void onSignInButtonClicked();
-
         void onSignUpTextClicked();
     }
 
@@ -63,10 +68,16 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
         initializeFields(rootView);
+        initialiseToolbar(rootView);
         signInButton.setOnClickListener(onSignInClickListener);
         signUpButton.setOnClickListener(onSignUpClickListener);
         registerViewModel();
         return rootView;
+    }
+
+    private void initialiseToolbar(View rootView) {
+        Toolbar toolbar = rootView.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
     }
 
 
@@ -84,6 +95,9 @@ public class SignInFragment extends Fragment {
         viewModel.getIsLoggedIn().observe(getViewLifecycleOwner(), isLoggedIn -> {
             if (isLoggedIn) {
                 showMessage("Signed In");
+                SharedPreference sharedPreference = new SharedPreference();
+                sharedPreference.init(getActivity());
+                sharedPreference.setUser(emailAddressEditText.getText().toString());
                 onClickedListener.onSignInButtonClicked();
 
             } else {
@@ -120,4 +134,7 @@ public class SignInFragment extends Fragment {
         String password = passwordEditText.getText().toString();
         viewModel.signIn(email, password);
     };
+
+
+
 }

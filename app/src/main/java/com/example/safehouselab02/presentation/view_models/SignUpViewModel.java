@@ -34,6 +34,7 @@ public class SignUpViewModel extends ViewModel {
         } else if (!isEqualPasswords) {
             error.setValue(EnumErrors.REPEAT_PASSWORD.toString());
         } else {
+
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(task -> {
                         isSignedUn.setValue(task.isSuccessful());

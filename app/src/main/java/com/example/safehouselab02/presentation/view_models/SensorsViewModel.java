@@ -1,5 +1,7 @@
 package com.example.safehouselab02.presentation.view_models;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -16,6 +18,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
+
+import static android.content.ContentValues.TAG;
 
 public class SensorsViewModel extends ViewModel {
     private RemoteRepository repository;
@@ -46,7 +50,7 @@ public class SensorsViewModel extends ViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 data -> response.setValue(data),
-                                error -> Timber.i("Timber %s", error.getMessage())
+                                error -> Timber.d("Error password not updated")
                         )
         );
     }
