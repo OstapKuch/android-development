@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.safehouselab02.R;
-import com.example.safehouselab02.presentation.SharedPreference;
+import com.example.safehouselab02.presentation.shared_prefs.SharedPreference;
 
 import java.util.Locale;
 
@@ -35,7 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch(item.getItemId()) {
             case R.id.change_language:
                 onLanguageClicked();
                 return true;
@@ -58,9 +58,9 @@ public class BaseActivity extends AppCompatActivity {
     public void initLanguage() {
         initSharedPreference();
         String language = sharedPreference.getLanguage();
-        if (language.equals(LANGUAGE_UA)) {
+        if(language.equals(LANGUAGE_UA)) {
             setUkrainian(config);
-        } else if (!language.equals(LANGUAGE_US)) {
+        } else if(!language.equals(LANGUAGE_US)) {
             sharedPreference.setLanguage(LANGUAGE_US);
         }
     }
@@ -68,10 +68,10 @@ public class BaseActivity extends AppCompatActivity {
     private void onLanguageClicked() {
         initSharedPreference();
         String language = sharedPreference.getLanguage();
-        if (language.equals(LANGUAGE_UA)) {
+        if(language.equals(LANGUAGE_UA)) {
             sharedPreference.setLanguage(LANGUAGE_US);
-            this.getApplicationContext().getResources().updateConfiguration(config, null);
-        } else if (language.equals(LANGUAGE_US)) {
+            getApplicationContext().getResources().updateConfiguration(config, null);
+        } else if(language.equals(LANGUAGE_US)) {
             sharedPreference.setLanguage(LANGUAGE_UA);
             setUkrainian(config);
         }

@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RemoteRepository implements IRepository {
     private static final String BASE_URL = "http://206.81.22.134:3000/";
     private static final String API_PATH = "results";
-    private RandomSensorService service;
+    private final RandomSensorService service;
 
     public RemoteRepository() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -29,7 +29,7 @@ public class RemoteRepository implements IRepository {
     public OkHttpClient getLoggingClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        return  new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .build();
     }

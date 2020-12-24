@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.safehouselab02.R;
-import com.example.safehouselab02.presentation.OnItemClick;
+import com.example.safehouselab02.presentation.listeners.OnItemClick;
 import com.example.safehouselab02.presentation.ui_data.SensorViewData;
 
 import java.util.ArrayList;

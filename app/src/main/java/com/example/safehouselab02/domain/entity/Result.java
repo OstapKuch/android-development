@@ -1,4 +1,3 @@
-
 package com.example.safehouselab02.domain.entity;
 
 import com.google.gson.annotations.Expose;

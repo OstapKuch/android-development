@@ -2,19 +2,17 @@ package com.example.safehouselab02.presentation.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-import android.widget.Button;
-import android.widget.EditText;
-
 
 import com.example.safehouselab02.BuildConfig;
 import com.example.safehouselab02.R;
@@ -46,6 +44,7 @@ public class SignUpFragment extends Fragment {
 
     public interface OnClickListener {
         void onSignUpButtonClicked();
+
         void onBackButtonClicked();
     }
 
@@ -69,7 +68,7 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (BuildConfig.DEBUG) {
+        if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
     }
@@ -103,7 +102,7 @@ public class SignUpFragment extends Fragment {
     private void onClickToolbar(View rootView) {
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             OnClickListener.onBackButtonClicked();
         });
@@ -134,13 +133,13 @@ public class SignUpFragment extends Fragment {
         inputLayoutEmailAddress.setErrorEnabled(false);
         inputLayoutPassword.setErrorEnabled(false);
         inputLayoutPasswordRepeat.setErrorEnabled(false);
-        if (error.equals(EnumErrors.NAME.toString())) {
+        if(error.equals(EnumErrors.NAME.toString())) {
             inputLayoutPersonName.setError(EnumErrors.NAME.getError());
-        } else if (error.equals(EnumErrors.EMAIL.toString())) {
+        } else if(error.equals(EnumErrors.EMAIL.toString())) {
             inputLayoutEmailAddress.setError(EnumErrors.EMAIL.getError());
-        } else if (error.equals(EnumErrors.PASSWORD.toString())) {
+        } else if(error.equals(EnumErrors.PASSWORD.toString())) {
             inputLayoutPassword.setError(EnumErrors.PASSWORD.getError());
-        } else if (error.equals(EnumErrors.REPEAT_PASSWORD.toString())) {
+        } else if(error.equals(EnumErrors.REPEAT_PASSWORD.toString())) {
             inputLayoutPasswordRepeat.setError(EnumErrors.REPEAT_PASSWORD.getError());
         }
     }

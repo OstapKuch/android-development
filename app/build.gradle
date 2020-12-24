@@ -3,7 +3,11 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+//    id 'io.fabric'
 }
+
+//apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -72,6 +76,14 @@ dependencies {
 
     //Logging Interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
+    //Firebase crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics'
+    implementation 'com.google.firebase:firebase-analytics'
+
+    //Firebase messaging
+    implementation 'com.google.firebase:firebase-messaging'
+
 
 
 }

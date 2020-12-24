@@ -1,9 +1,11 @@
 package com.example.safehouselab02.presentation.fragments;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -12,33 +14,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
+import com.example.safehouselab02.Dialog;
 import com.example.safehouselab02.R;
-import com.example.safehouselab02.presentation.OnItemClick;
+import com.example.safehouselab02.presentation.listeners.OnItemClick;
 import com.example.safehouselab02.presentation.sensors_list.SensorsAdapter;
 import com.example.safehouselab02.presentation.view_models.SensorsViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import timber.log.Timber;
 
-
-public class StartScreen extends Fragment {
+public class StartScreenFragment extends Fragment {
 
     private RecyclerView userList;
-    private SensorsAdapter sensorsAdapter = new SensorsAdapter();
+    private final SensorsAdapter sensorsAdapter = new SensorsAdapter();
     private SwipeRefreshLayout refreshLayout;
     private SensorsViewModel sensorsViewModel;
     private ProgressBar loadingIndicator;
     private OnItemClick listener;
 
 
-    public StartScreen() {
+    public StartScreenFragment() {
     }
 
 
@@ -68,12 +63,14 @@ public class StartScreen extends Fragment {
     private void initViewModel() {
         sensorsViewModel = new SensorsViewModel();
         sensorsViewModel.getErrorMessage().observe(getViewLifecycleOwner(), errorMessage -> {
-            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+            Dialog dialog = new Dialog();
+            dialog.showDialog("Error", errorMessage, getContext());
+//            showDialog("Error", errorMessage);
+//            Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
             hideLoading();
 
         });
         sensorsViewModel.getResponse().observe(getViewLifecycleOwner(), response -> {
-            Timber.i("Timber we got response");
             sensorsAdapter.setItems(response);
             hideLoading();
 
@@ -84,7 +81,7 @@ public class StartScreen extends Fragment {
     @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnItemClick) {
+        if(context instanceof OnItemClick) {
             listener = (OnItemClick) context;
             sensorsAdapter.setClickListener(listener);
         } else {
@@ -108,4 +105,5 @@ public class StartScreen extends Fragment {
         Toolbar toolbar = rootView.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
     }
+
 }

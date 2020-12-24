@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.safehouselab02.R;
-import com.example.safehouselab02.presentation.OnItemClick;
+import com.example.safehouselab02.presentation.listeners.OnItemClick;
 import com.example.safehouselab02.presentation.ui_data.SensorViewData;
 
 public class SensorsViewHolder extends RecyclerView.ViewHolder {
     private final OnItemClick clickListener;
-    private TextView userName;
-    private TextView userLogin;
-    private TextView userGender;
+    private final TextView userName;
+    private final TextView userLogin;
+    private final TextView userGender;
 
-    private ImageView userPhoto;
+    private final ImageView userPhoto;
 
     public SensorsViewHolder(@NonNull View itemView, OnItemClick clickListener) {
         super(itemView);

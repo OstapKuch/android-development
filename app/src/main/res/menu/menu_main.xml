@@ -13,7 +13,6 @@
         app:showAsAction="ifRoom|withText"
         android:title="@string/profile"
         >
-<!--        android:visible="false"-->
     </item>
     <item
         android:id="@+id/logout"

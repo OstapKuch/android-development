@@ -2,18 +2,17 @@ package com.example.safehouselab02.presentation.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.safehouselab02.R;
 import com.example.safehouselab02.presentation.view_models.ProfileViewModel;
@@ -72,7 +71,7 @@ public class ProfileFragment extends Fragment {
     private void registerViewModel() {
         viewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
         viewModel.getIsPasswordChanged().observe(getViewLifecycleOwner(), isPasswordChanged -> {
-            if (isPasswordChanged) {
+            if(isPasswordChanged) {
                 onClickedListener.onSaveButtonClicked();
                 showMessage("password changed");
             }

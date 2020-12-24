@@ -7,43 +7,38 @@ import com.example.safehouselab02.data.repository.RemoteRepository;
 import com.example.safehouselab02.domain.entity.Result;
 import com.example.safehouselab02.presentation.ui_data.SensorViewData;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class SensorsViewModel extends ViewModel {
+public class NotificationViewModel extends ViewModel {
     private final RemoteRepository repository;
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
-    private final MutableLiveData<List<SensorViewData>> response = new MutableLiveData<>();
+    private final MutableLiveData<SensorViewData> response = new MutableLiveData<>();
 
-    public SensorsViewModel() {
+    public NotificationViewModel() {
         repository = new RemoteRepository();
     }
 
-
-    public void loadUserList() {
+    public void loadSensorById(String id) {
 
         compositeDisposable.add(
                 repository.loadSensors()
                         .map(data -> {
-                            List<SensorViewData> result = new ArrayList<>();
                             for(Result item : data.getResults()) {
-                                SensorViewData sensorViewData = new SensorViewData(item.getName(),
-                                        item.getValue().getValue(),
-                                        item.getValue().getTime(),
-                                        item.getPicture().getLarge());
-                                result.add(sensorViewData);
+                                if(item.getId().getValue().equals(id)) {
+                                    return new SensorViewData(
+                                            item.getName(),
+                                            item.getValue().getValue(),
+                                            item.getValue().getTime(),
+                                            item.getPicture().getLarge()
+                                    );
+                                }
                             }
-                            Collections.shuffle(result, new Random());
-                            return result;
+                            return null;
                         })
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -58,7 +53,7 @@ public class SensorsViewModel extends ViewModel {
         return errorMessage;
     }
 
-    public MutableLiveData<List<SensorViewData>> getResponse() {
+    public MutableLiveData<SensorViewData> getResponse() {
         return response;
     }
 

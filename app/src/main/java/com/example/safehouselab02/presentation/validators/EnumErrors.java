@@ -6,7 +6,7 @@ public enum EnumErrors {
     PASSWORD("Password is too short"),
     REPEAT_PASSWORD("Password doesn't match");
 
-    private String ErrorMessage;
+    private final String ErrorMessage;
 
     EnumErrors(String error) {
         this.ErrorMessage = error;

@@ -1,4 +1,4 @@
-package com.example.safehouselab02.presentation;
+package com.example.safehouselab02.presentation.controllers;
 
 import android.app.Application;
 
@@ -10,7 +10,7 @@ public class ApplicationController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (BuildConfig.DEBUG) {
+        if(BuildConfig.DEBUG) {
             Timber.plant(new Timber.DebugTree());
         }
     }

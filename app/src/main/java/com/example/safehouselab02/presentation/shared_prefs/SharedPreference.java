@@ -1,11 +1,9 @@
-package com.example.safehouselab02.presentation;
+package com.example.safehouselab02.presentation.shared_prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.fragment.app.FragmentActivity;
-
-import timber.log.Timber;
 
 public class SharedPreference {
     private SharedPreferences prefs;
@@ -35,7 +33,6 @@ public class SharedPreference {
     }
 
     public void removeUser() {
-        Timber.e("TIMBER KEY _______________-------------------------");
         prefs.edit().remove(KEY_USER_EMAIL).apply();
     }
 }

@@ -67,6 +67,7 @@ public class SensorViewData implements Parcelable {
         parcel.writeString(state);
         parcel.writeString(photoUrl);
     }
+
     public static final Parcelable.Creator<SensorViewData> CREATOR
             = new Parcelable.Creator<SensorViewData>() {
 
@@ -74,8 +75,9 @@ public class SensorViewData implements Parcelable {
         public SensorViewData createFromParcel(Parcel in) {
             return new SensorViewData(in);
         }
+
         @Override
-        public  SensorViewData[] newArray(int size) {
+        public SensorViewData[] newArray(int size) {
             return new SensorViewData[size];
         }
 

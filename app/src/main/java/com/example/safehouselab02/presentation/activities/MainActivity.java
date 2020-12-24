@@ -5,15 +5,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+
+import com.example.safehouselab02.Dialog;
 import com.example.safehouselab02.R;
-import com.example.safehouselab02.presentation.OnItemClick;
-import com.example.safehouselab02.presentation.SharedPreference;
 import com.example.safehouselab02.presentation.fragments.ProfileFragment;
 import com.example.safehouselab02.presentation.fragments.SignInFragment;
 import com.example.safehouselab02.presentation.fragments.SignUpFragment;
-import com.example.safehouselab02.presentation.fragments.StartScreen;
+import com.example.safehouselab02.presentation.fragments.StartScreenFragment;
+import com.example.safehouselab02.presentation.listeners.ConnectionStateListener;
+import com.example.safehouselab02.presentation.listeners.OnItemClick;
+import com.example.safehouselab02.presentation.shared_prefs.SharedPreference;
 import com.example.safehouselab02.presentation.ui_data.SensorViewData;
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends BaseActivity implements
@@ -21,10 +27,11 @@ public class MainActivity extends BaseActivity implements
         SignInFragment.OnButtonClickListener,
         SignUpFragment.OnClickListener,
         ProfileFragment.OnButtonClickListener {
+    public static final String ID = "ID";
 
     private SignUpFragment signUpFragment;
     private SignInFragment signInFragment;
-    private StartScreen startScreenFragment;
+    private StartScreenFragment startScreenFragment;
     private ProfileFragment profileFragment;
     private boolean isSignedIn;
 
@@ -33,8 +40,24 @@ public class MainActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         initLanguage();
         isSignedIn();
+        initFirebase();
+
         setContentView(R.layout.activity_main);
         onAppStart();
+        setConnectionMonitoring();
+    }
+
+    private void setConnectionMonitoring() {
+        ConnectionStateListener connectionStateMonitor = new ConnectionStateListener(this);
+        Dialog dialog = new Dialog();
+        final String dialogTitle = "Notification";
+        final String dialogMessage = "Network connection was lost.";
+        connectionStateMonitor.observe(this, aBoolean -> {
+            if(!aBoolean) {
+                // network connection lost
+                dialog.showDialog(dialogTitle, dialogMessage, this);
+            }
+        });
     }
 
     @Override
@@ -96,8 +119,8 @@ public class MainActivity extends BaseActivity implements
         signInFragment = new SignInFragment();
         signUpFragment = new SignUpFragment();
         profileFragment = new ProfileFragment();
-        startScreenFragment = new StartScreen();
-        if (!isSignedIn) {
+        startScreenFragment = new StartScreenFragment();
+        if(!isSignedIn) {
             startSignInFragment();
         } else {
             startScreenFragment();
@@ -109,25 +132,17 @@ public class MainActivity extends BaseActivity implements
         SharedPreference sharedPreference = new SharedPreference();
         sharedPreference.init(this);
         String email = sharedPreference.getUser().trim();
-        if (email.length() == 0) {
-            isSignedIn = false;
-        } else {
-            isSignedIn = true;
-        }
+        isSignedIn = email.length() != 0;
     }
 
 
-    public boolean onPrepareOptionsMenu(Menu menu)
-    {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem profile = menu.findItem(R.id.open_profile);
         MenuItem logOut = menu.findItem(R.id.logout);
-        if(!isSignedIn)
-        {
+        if(!isSignedIn) {
             profile.setVisible(false);
             logOut.setVisible(false);
-        }
-        else
-        {
+        } else {
             profile.setVisible(true);
             logOut.setVisible(true);
         }
@@ -138,4 +153,23 @@ public class MainActivity extends BaseActivity implements
     public void onItemClick(SensorViewData sensorViewData) {
         SensorActivity.start(this, sensorViewData);
     }
+
+    public void initFirebase() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        String token = task.getResult();
+                    }
+                });
+
+    }
+
+
+
+
+
 }
